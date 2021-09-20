@@ -1,5 +1,16 @@
 const stun = require("stun");
-const logger = require('heroku-logger'); 
+const winston = require("winston");
+const { Mail } = require("winston-mail");
+
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  defaultMeta: { service: "user-service" },
+  transports: [
+    new winston.transports.Console(),
+    new Mail({ to: "dsilveira@uolinc.com" }),
+  ],
+});
 
 const server = stun.createServer({ type: "udp4" });
 
@@ -7,7 +18,7 @@ const { STUN_BINDING_RESPONSE, STUN_EVENT_BINDING_REQUEST } = stun.constants;
 const userAgent = `node/${process.version} stun/v1.0.0`;
 
 server.on(STUN_EVENT_BINDING_REQUEST, (request, rinfo) => {
-  logger.info('address', rinfo);
+  logger.info("rinfo", { rinfo });
   const message = stun.createMessage(
     STUN_BINDING_RESPONSE,
     request.transactionId
