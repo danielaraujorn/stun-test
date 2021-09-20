@@ -1,15 +1,11 @@
 const stun = require("stun");
 const winston = require("winston");
-const { Mail } = require("winston-mail");
 
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.json(),
   defaultMeta: { service: "user-service" },
-  transports: [
-    new winston.transports.Console(),
-    new Mail({ to: "dsilveira@uolinc.com" }),
-  ],
+  transports: [new winston.transports.Console()],
 });
 
 const server = stun.createServer({ type: "udp4" });

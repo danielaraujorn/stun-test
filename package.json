@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "stun": "^2.1.0",
-    "winston": "^3.3.3",
-    "winston-mail": "^2.0.0"
+    "winston": "^3.3.3"
   }
 }
